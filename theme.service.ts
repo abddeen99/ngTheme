@@ -39,11 +39,17 @@ export class ThemeService {
   }
 
   private getThemeValue(): string {
-    return document.documentElement.getAttribute('data-bs-theme') || '';
+    return document.documentElement.getAttribute(this.attributeName) || '';
   }
 
   private setTheme(theme: string) {
-    this.renderer.setAttribute(document.documentElement, 'data-bs-theme', theme);
+    this.renderer.setAttribute(document.documentElement, this.attributeName, theme);
+  }
+
+  public preferredTheme(): string {
+    const prefersDarkTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    return prefersDarkTheme ? 'dark' : 'light';
   }
 
   public darkMode(): BehaviorSubject<boolean> {
