@@ -54,11 +54,11 @@ private saveTheme(enabled: boolean): void {
   this.setCurrentUser(updateMe);  
 }  
   
-private loadTheme() {  
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));  
-  const savedTheme = currentUser?.parameters?.settings?.darkMode !== undefined ? currentUser.parameters.settings.darkMode : false;  
-  
-  savedTheme ? this.themeService.enable() : this.themeService.disable();  
+private loadTheme() {
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const useDarkMode = currentUser?.parameters?.settings?.darkMode ?? (this.themeService.preferredTheme() === 'dark');
+
+  useDarkMode ? this.themeService.enable() : this.themeService.disable();
 }
 ```
 
